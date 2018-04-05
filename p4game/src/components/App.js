@@ -14,8 +14,8 @@ import { firebase } from '../firebase';
 import './App.css';
 import axios from 'axios';
 
-const API_ID = process.env.API_ID;
-const API_KEY = process.env.API_KEY;
+const API_ID = process.env.REACT_APP_API_ID;
+const API_KEY = process.env.REACT_APP_API_KEY;
 class App extends Component {
   // constructor(props) {
   //   super(props);
@@ -42,6 +42,7 @@ class App extends Component {
     .then((res) => {
       let twitch = [...res.data]
       this.setState[{twitch}]
+      console.log(res);
     }))
   }
 
@@ -51,6 +52,7 @@ class App extends Component {
     .then((res) => {
       let info = [...res.data]
       this.setState({info});
+      console.log(res);
     }))
   }
 
