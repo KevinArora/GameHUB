@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
 import { PasswordForgetLink } from './PasswordForget';
 import { SignUpLink } from './SignUp';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
+import './css/SignIn.css'
 
 const SignInPage = ({ history }) =>
-  <div>
-    <h1>SignIn</h1>
+  <div className="bevel">
+    <h1 className="white">Log In</h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
     <SignUpLink />
@@ -64,31 +65,50 @@ class SignInForm extends Component {
       email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <div className="containers">
+      <div className="card card-container">
+      {/* <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> --> */}
+            <img id="profile-img" className="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+      <form className="form-signin" onSubmit={this.onSubmit}>
+      <span id="reauth-email" className="reauth-email"></span>
         <input
+          className="form-control"
           value={email}
           onChange={event => this.setState(byPropKey('email', event.target.value))}
           type="text"
           placeholder="Email Address"
         />
         <input
+          className="form-control"
           value={password}
           onChange={event => this.setState(byPropKey('password', event.target.value))}
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
+        <div id="remember" className="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me" /> Remember me 
+          </label>
+        </div>
+        <button className="btn btn-lg btn-primary btn-block btn-signin" disabled={isInvalid} type="submit">
           Sign In
         </button>
 
         { error && <p>{error.message}</p> }
       </form>
+      </div>
+      </div>
     );
   }
 }
 
+const SignInLink =() =>
+<p className="white">Have an account? <b/>
+<Link to='signin'>Sign In </Link>
+</p>
 export default withRouter(SignInPage);
 
 export {
   SignInForm,
+  SignInLink,
 };

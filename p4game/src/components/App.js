@@ -12,7 +12,10 @@ import withAuthentication from './withAuthentication';
 import * as routes from '../constants/routes';
 import { firebase } from '../firebase';
 import './App.css';
+import axios from 'axios';
 
+const API_ID = process.env.API_ID;
+const API_KEY = process.env.API_KEY;
 class App extends Component {
   // constructor(props) {
   //   super(props);
@@ -29,14 +32,36 @@ class App extends Component {
   //       : this.setState(() => ({ authUser: null }));
   //   });
   // }
+  state ={
+    info:{},
+    twitch:[],
+  }
+  getTwitch = async (game) => {
+    await axios.get(`https://api.twitch.tv/kraken/search/streams?q=${game}&limit=100&offset=0&client_id=${API_ID}`)
+    .then((res => res.json())
+    .then((res) => {
+      let twitch = [...res.data]
+      this.setState[{twitch}]
+    }))
+  }
+
+  getIGDB = async (game) => {
+    await axios.get(`https://www.giantbomb.com/api/search?json_callback=JSON_CALLBACK&api_key=${API_KEY}&format=json&resources=game&limit=1&query=${game}`)
+    .then((res => res.json())
+    .then((res) => {
+      let info = [...res.data]
+      this.setState({info});
+    }))
+  }
+
   render() {
     return (
       <div className="App">
         <Router>
         <div>
-        <Navigation  />
+        {/* <Navigation  /> */}
 
-      <hr/>
+      {/* <hr/> */}
 
       <Route
         exact path={routes.LANDING}
