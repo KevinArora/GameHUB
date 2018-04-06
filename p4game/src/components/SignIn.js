@@ -5,13 +5,17 @@ import { SignUpLink } from './SignUp';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 import './css/SignIn.css'
-
+import Logo from '../GAMELIB.png';
 const SignInPage = ({ history }) =>
+  <div>
+  <img className="gamelib" src={Logo}/>
+  
   <div className="bevel">
     <h1 className="white">Log In</h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
     <SignUpLink />
+  </div>
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
@@ -96,6 +100,7 @@ class SignInForm extends Component {
 
         { error && <p>{error.message}</p> }
       </form>
+    
       </div>
       </div>
     );

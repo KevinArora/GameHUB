@@ -4,6 +4,8 @@ import { auth, db } from '../firebase';
 import {SignInLink} from './SignIn';
 import * as routes from '../constants/routes';
 import './css/SignIn.css'
+import './css/SignUp.css'
+import Logo from '../GAMELIB.png';
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
@@ -15,10 +17,13 @@ const INITIAL_STATE = {
   error: null,
 };
 const SignUpPage = ({history}) =>
+<div>
+<img className="gamelib" src={Logo}/>
   <div className="bevel">
     <h1 className="white">New? Sign Up</h1>
     <SignUpForm history={history} />
     <SignInLink/>
+  </div>
   </div>
 
 class SignUpForm extends Component {
