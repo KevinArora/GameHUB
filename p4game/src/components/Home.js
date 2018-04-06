@@ -5,8 +5,11 @@ import { db } from '../firebase';
 import mithril from 'mithril';
 import fetchJsonp from 'fetch-jsonp';
 import GameView from './GameView';
+import TwitchView from './TwitchView';
+import Example from './Carousel';
 
 
+let data = {};
 const API_ID = process.env.REACT_APP_API_ID;
 const API_KEY = process.env.REACT_APP_API_KEY;
 class HomePage extends Component {
@@ -15,9 +18,7 @@ class HomePage extends Component {
 
     this.state = {
       users: null,
-      info:{
-        results: [
-          {
+      info: {
             "aliases": null,
             "api_detail_url": "https://www.giantbomb.com/api/game/3030-48190/",
             "date_added": "2014-11-07 12:10:07",
@@ -63,12 +64,12 @@ class HomePage extends Component {
             ],
             "site_detail_url": "https://www.giantbomb.com/overwatch/3030-48190/",
             "resource_type": "game"
-          }
-        ],
-        "version": "1.0"
-      },
+      }
+    
+        ,
       twitch:null,
       query:"",
+      response:{},
     }
     
   }
@@ -83,7 +84,30 @@ class HomePage extends Component {
 
   getIGDB = async (game) => { 
     
-  //   fetchJsonp(`https://www.giantbomb.com/api/search?json_callback=JSON_CALLBACK&api_key=${API_KEY}&format=json&resources=game&limit=1&query=${game}`)
+    // var jsonp = require('jsonp');
+
+    //   jsonp(`http://www.giantbomb.com/api/search/?format=jsonp&api_key=${API_KEY}&query=${game}`, jsonp, function (err, data) {
+    //     if (err) {
+    //     console.error(err.message);
+    //   } else {
+    //     console.log(data);
+    //   }
+    // });
+
+    fetchJsonp(`https://www.giantbomb.com/api/search?api_key=${API_KEY}&format=jsonp&resources=game&limit=1&query=${game}`, {
+      jsonpCallback: 'json_callback',
+    })
+    .then((response) => {
+      return response.json()
+    }).then((json) => {
+      data = json
+      this.setState({info:data.results[0]})
+      console.log('parsed json', data.results[0])
+    }).catch(function(ex) {
+      console.log('parsing failed', ex)
+    })
+
+  //   fetchJsonp(`https://www.giantbomb.com/api/search?api_key=${API_KEY}&format=jsonp&resources=game&limit=1&query=${game}`)
   // .then(function(response) {
   //   return response.json()
   // }).then(function(json) {
@@ -92,22 +116,25 @@ class HomePage extends Component {
   //   console.log('parsing failed', ex)
   // })
 
-    mithril.jsonp({
+    // mithril.jsonp({
 
-      url: `https://www.giantbomb.com/api/search?api_key=${API_KEY}&format=jsonp&resources=game&limit=1&query=${game}`,
+    //   url: `https://www.giantbomb.com/api/search?api_key=${API_KEY}&format=jsonp&resources=game&limit=1&query=${game}`,
       
-      callbackKey: "json_callback",
+    //   callbackKey: "json_callback",
       
-      })
+    //   })
       
-      .then(function(response) {
+    //   .then(function(response) {
+    //     console.log(response.data)
+    //     console.log(response.results)
+    //     data = response.results[0]
+    //     this.setState({response})
+        
+    //   })
+      // this.setState({ info:data  })
       
-      console.log(response)
-      
-      })
-
     // await axios.get(`https://www.giantbomb.com/api/search/?api_key=ecf2a23ade0df5e6eb1a0e29ee29e0f1738c9553&format=jsonP&json_callback=JSON_CALLBACK&limit=1&query=Overwatch&resources=game&resources=game`)
-    // // await axios.get(`https://www.giantbomb.com/api/search?json_callback=JSON_CALLBACK&api_key=${API_KEY}&format=json&resources=game&limit=1&query=${game}&resources=game`)
+    // await axios.get(`http://www.giantbomb.com/api/game/3030-4725/?api_key=${API_KEY}&format=json&field_list=genres,name`)
     // .then((res) => {
     //   let info = [...res.data]
     //   this.setState({info});
@@ -125,21 +152,26 @@ class HomePage extends Component {
      this.setState({query : value  });
      this.getTwitch(value);
      this.getIGDB(value);
+     console.log(data);
     }
   render() {
     const { users } = this.state;
     return (
       <div>
-        <h1>Welcome</h1>
+
         <div className="search-bar">
         <input 
         className="query form-control"
         placeholder="Game Name"
         />
-        <button onClick={this.handleClick}>Search</button>
+        <button onClick={this.handleClick} className="btn btn-success stretch">Search</button>
        </div>
+       
         <GameView 
         info={this.state.info}
+        />
+        <TwitchView 
+        twitch={this.state.twitch}
         />
         
         {/* <p>The Home Page is accessible by every signed in user.</p> */}

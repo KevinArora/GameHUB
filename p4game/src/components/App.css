@@ -25,7 +25,38 @@
 .white{
  color:white;
 }
-
+.search-bar {
+  display: inline;
+}
+.stretch {
+  width:100%;
+}
+.contentbox {
+  display: flex;
+  flex-direction: row;
+  width:50%;
+}
+.game {
+  /* width:50%;
+  float: left;
+  position: absolute;
+  align-content: left; */
+}
+.description{
+  background-color: white;
+}
+.stream {
+  position: absolute;
+  top:17%;
+  left:50%;
+  background-color: rgba(255,255,255,.8);
+  border-radius: 15px;
+  padding:15px;
+}
+.info {
+  width: 50%; height: 50%;overflow: auto; overflow-x: hidden;
+  float: left;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

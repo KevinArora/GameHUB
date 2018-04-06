@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './css/GameView.css';
+import TwitchView from './TwitchView';
 class GameView extends Component {
   state = {}
 
@@ -9,13 +10,13 @@ class GameView extends Component {
     // let image = this.props.info.results[0].image;
     // console.log(description);
     // console.log(image);
-    
+    // console.log(this.props.info);
     return ( 
-    <div className="contentbox leftbox">
-      <img src={this.props.info.results[0].image.medium_url}/>
-     
+    <div className="info">
+      <img src={this.props.info.image.medium_url}/>
+      
       {/* this renders the string data as HTML. super important since its all html tags being sent as string. */}
-      <div dangerouslySetInnerHTML={{__html: this.props.info.results[0].description}} />
+      <div dangerouslySetInnerHTML={{__html: this.props.info.description}} />
     
     </div> 
     )
