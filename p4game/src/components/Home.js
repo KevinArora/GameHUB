@@ -7,6 +7,7 @@ import fetchJsonp from 'fetch-jsonp';
 import GameView from './GameView';
 import TwitchView from './TwitchView';
 import Example from './Carousel';
+import './css/Home.css';
 
 
 let data = {};
@@ -67,18 +68,35 @@ class HomePage extends Component {
       }
     
         ,
-      twitch:null,
+      twitch:  
+      [{
+        "channel":{"name": "overwatchleague"},
+        "_id": 28221756992,
+        "game": "League of Legends",
+        "viewers": 17034,
+        "video_height": 1080,
+        "average_fps": 60,
+        "delay": 0,
+        "created_at": "2018-04-06T03:11:13Z",
+        "is_playlist": false,
+        "stream_type": "live",
+        "preview": {
+          "small": "https://static-cdn.jtvnw.net/previews-ttv/live_user_c9sneaky-80x45.jpg",
+          "medium": "https://static-cdn.jtvnw.net/previews-ttv/live_user_c9sneaky-320x180.jpg",
+          "large": "https://static-cdn.jtvnw.net/previews-ttv/live_user_c9sneaky-640x360.jpg",
+          "template": "https://static-cdn.jtvnw.net/previews-ttv/live_user_c9sneaky-{width}x{height}.jpg"
+        }}],
       query:"",
-      response:{},
+      stream:0,
     }
     
   }
   getTwitch = async (game) => {
     await axios.get(`https://api.twitch.tv/kraken/search/streams?q=${game}&limit=100&offset=0&client_id=${API_ID}`)
     .then((res) => {
-      let twitch = [...res.data]
+      let twitch = [...res.data.streams]
       this.setState({twitch})
-      console.log(res);
+      console.log(twitch);
     })
   }
 
@@ -155,6 +173,15 @@ class HomePage extends Component {
      console.log(data);
     }
   render() {
+    
+   function handleStreamChange() {
+     let count = this.state.stream;
+      if (count > 10)count = 0;
+      if (count < 0)count = 10;
+      count++
+      this.setState({stream:count});
+      console.log(count);
+    };
     const { users } = this.state;
     return (
       <div>
@@ -164,14 +191,16 @@ class HomePage extends Component {
         className="query form-control"
         placeholder="Game Name"
         />
-        <button onClick={this.handleClick} className="btn btn-success stretch">Search</button>
+        <button onClick={this.handleClick} className="btn btn-success stretch ontop" style={{zIndex:2}}>Search</button>
        </div>
        
         <GameView 
         info={this.state.info}
         />
         <TwitchView 
-        twitch={this.state.twitch}
+        channel={this.state.twitch[0].channel.name}
+        handleStreamChange={this.handleStreamChange}
+        stream={this.state.stream}
         />
         
         {/* <p>The Home Page is accessible by every signed in user.</p> */}
