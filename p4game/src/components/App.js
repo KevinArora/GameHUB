@@ -32,30 +32,6 @@ class App extends Component {
   //       : this.setState(() => ({ authUser: null }));
   //   });
   // }
-  state ={
-    info:{},
-    twitch:[],
-  }
-  getTwitch = async (game) => {
-    await axios.get(`https://api.twitch.tv/kraken/search/streams?q=${game}&limit=100&offset=0&client_id=${API_ID}`)
-    .then((res => res.json())
-    .then((res) => {
-      let twitch = [...res.data]
-      this.setState[{twitch}]
-      console.log(res);
-    }))
-  }
-
-  getIGDB = async (game) => {
-    await axios.get(`https://www.giantbomb.com/api/search?json_callback=JSON_CALLBACK&api_key=${API_KEY}&format=json&resources=game&limit=1&query=${game}`)
-    .then((res => res.json())
-    .then((res) => {
-      let info = [...res.data]
-      this.setState({info});
-      console.log(res);
-    }))
-  }
-
   render() {
     return (
       <div className="App">
