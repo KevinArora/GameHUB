@@ -47,15 +47,16 @@
 }
 .stream {
   position: absolute;
-  top:17%;
+  top:10%;
   left:50%;
   background-color: rgba(255,255,255,.8);
   border-radius: 15px;
   padding:15px;
 }
 .info {
-  width: 50%; height: 50%;overflow: auto; overflow-x: hidden;
-  float: left;
+  width: 650px; height: 400px;overflow-y: auto; overflow-x: hidden;
+  position: absolute;
+  padding-top: 10px;
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

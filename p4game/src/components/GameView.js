@@ -11,8 +11,17 @@ class GameView extends Component {
     // console.log(description);
     // console.log(image);
     // console.log(this.props.info);
+    
+    // function calculateDivHeight(){
+    //   document.getElementById("scrollablediv").height(window.innerHeight);
+    // }
+    // calculateDivHeight();
+    // $(window).resize(function () {
+    //   calculateDivHeight();
+    // }
+
     return ( 
-    <div className="info">
+    <div className="info" id="scrollablediv" >
       <img src={this.props.info.image.medium_url}/>
       
       {/* this renders the string data as HTML. super important since its all html tags being sent as string. */}
