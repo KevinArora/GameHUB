@@ -72,3 +72,11 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.bevel {
+  /* height: 6000px;
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%) */
+}

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 class TwitchView extends Component {
   state = {}
+
+  handleClick = () => {
+    this.props.handleStreamChange()
+  }
+
   render() { 
     // let count = 0;
   //  function handleStreamChange() {
@@ -19,7 +24,7 @@ class TwitchView extends Component {
         scrolling="no"
         allowFullScreen="true">
     </iframe>
-    <button className="nextbutton btn btn-success" onClick={this.props.handleStreamChange}> Next </button>
+    <button className="nextbutton btn btn-success" onClick={this.handleClick}> Next </button>
     </div> )
   }
 }

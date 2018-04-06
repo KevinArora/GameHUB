@@ -172,6 +172,40 @@ class HomePage extends Component {
      this.getIGDB(value);
      console.log(data);
     }
+    saveFav = async (data) => {
+      console.log('save check ', data)
+      console.log(Number(data.request_id));
+      let newData = {
+        ID: parseInt(data.request_id),
+        title: data.agency_name + ', '+data.section_name,
+        description: data.additional_description_1
+      }
+      await axios.post("/favorites", newData)
+      console.log(this.state.favorites,newData)
+      let favorites = [...this.state.favorites]
+      favorites.push(newData)
+      this.setState({ favorites })
+      
+    }
+    deleteFav = async (id, index) => {
+      
+    
+      console.log(id.id);
+     
+      await axios.delete(`/favorites/${id.id}`)
+  
+      let favorites = [...this.state.favorites]
+      favorites.splice(index, 1)
+      this.setState({ favorites})
+    }
+    handleStreamChange = () => {
+      let count = this.state.stream;
+       if (count > 10)count = 0;
+       if (count < 0)count = 10;
+       count++
+       this.setState({stream:count});
+       console.log(count);
+     };
   render() {
     
    function handleStreamChange() {
@@ -198,7 +232,7 @@ class HomePage extends Component {
         info={this.state.info}
         />
         <TwitchView 
-        channel={this.state.twitch[0].channel.name}
+        channel={this.state.twitch[this.state.stream].channel.name}
         handleStreamChange={this.handleStreamChange}
         stream={this.state.stream}
         />
